@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=1000, user-scalable=no" />
+    <meta charset="utf-8">
+    <title>PIXI.JS test</title>
+    <style>
+    body {
+      -webkit-transform: translateZ(0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+    </style>
+    <script src="polyfillRequestAnimationFrame.js"></script>
+    <script src="pixi.dev.js"></script>
+    <script src="jquery-1.9.1.min.js"></script>
+  </head>
+  <body>
+    <canvas id="renderCanvas" style="float:left; border: 1px solid black;"></canvas>
+    <script>
+    jQuery(function(){
+      // broken settings
+      var WIDTH = 960;
+      var HEIGHT = 640;
+
+      // // working settings
+      // var WIDTH = 640;
+      // var HEIGHT = 640;
+
+
+      var view = document.getElementById('renderCanvas');
+      var renderer = new PIXI.autoDetectRenderer(WIDTH, HEIGHT, view, false); 
+
+      document.body.appendChild(renderer.view);
+
+      var stage = new PIXI.Stage(0x101010, true);
+
+      var container = new PIXI.DisplayObjectContainer();
+      stage.addChild(container);
+
+      var text = new PIXI.Text(
+        'where am i?',
+        {
+          font:'50px Arial',
+          fill:'#ffffff'
+        }
+        );
+      text.anchor = new PIXI.Point(0.5, 0.5);
+      text.position = new PIXI.Point(
+        (WIDTH/2),
+        (HEIGHT/2)
+        );
+      container.addChild(text);
+
+      var bunnyTexture = PIXI.Texture.fromImage('http://www.goodboydigital.com/pixijs/examples/1/bunny.png');
+      var bunny = new PIXI.Sprite(bunnyTexture);
+      bunny.position.x = 200;
+      bunny.position.y = 200;
+
+      container.addChild(bunny);
+
+      requestAnimationFrame(animate);
+
+      function animate() {
+          requestAnimationFrame(animate);
+          renderer.render(stage);
+      };
+    });
+    </script>
+  </body>
+</html>
